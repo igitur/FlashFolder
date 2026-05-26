@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include Id="VersionInclude">
+	<!-- _version.wxi.templ = template file for generating version include file
+	     _version.wxi = generated version include file, not included in repository
+	     Only modify the .templ-File since _version.wxi gets overwritten during compile!
+	--> 
+	
+	<?define Version="1.11.0.0" ?>
+	<?define VersionDisplay="1.11.0" ?>
+
+</Include>

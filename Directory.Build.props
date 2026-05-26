@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Directory.Build.props - automatically imported by MSBuild for all projects under this directory.
+  Prevents the VS dev command prompt env var clear from breaking toolset detection.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ClearDevCommandPromptEnvVars>false</ClearDevCommandPromptEnvVars>
+  </PropertyGroup>
+</Project>

@@ -17,65 +17,32 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 -->
-<!-- MSBuild-Script for building the FlashFolder MSI installer and all dependent projects -->
+<!-- MSBuild-Script for building FlashFolder and all dependent projects (x64 only) -->
 
-<Project DefaultTargets="Build_x64" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-	<Import Project="SvnVersionInclude.targets" />
-
-	<!-- Build sub projects ....................................................................... -->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<ItemGroup>
-		<VCProject Include="CommonUtils\CommonUtilsLib.vcproj"/>
-		<VCProject Include="Common\CommonLib.vcproj"/>
-		<VCProject Include="FFConfig\FFConfig.vcproj"/>
-		<VCProject Include="FFLib\FFLib.vcproj"/>
-		<VCProject Include="FFService\FFService.vcproj"/>
-		<VCProject Include="FileMgrPlugin\FileMgrPlugin.vcproj"/>
-		<VCProject Include="Installer\wcautil\wcautil.vcproj"/>
-		<VCProject Include="Installer\CustomActions\CustomActions.vcproj"/>
+		<VCProject Include="commonUtils\CommonUtilsLib.vcxproj"/>
+		<VCProject Include="Installer\wcautil\wcautil.vcxproj"/>
+		<VCProject Include="Installer\CustomActions\CustomActions.vcxproj"/>
+		<VCProject Include="common\CommonLib.vcxproj"/>
+		<VCProject Include="FFConfig\FFConfig.vcxproj"/>
+		<VCProject Include="FFLib\FFLib.vcxproj"/>
+		<VCProject Include="FFService\FFService.vcxproj"/>
+		<VCProject Include="FileMgrPlugin\FileMgrPlugin.vcxproj"/>
+		<VCProject Include="Installer\MkVersionFile\MkVersionFile.vcxproj"/>
+		<VCProject Include="Installer\Installer.vcxproj"/>
 	</ItemGroup>
 
-	<Target Name="VCProjects_x86" DependsOnTargets="SvnVersionInclude">
-		<Message Text="_______Building VC projects (x86)_______" Importance="high"/>
-		<VCBuild Projects="@(VCProject)" Configuration="$(Configuration)|Win32"/>
-	</Target>
-
-	<Target Name="VCProjects_x64" DependsOnTargets="SvnVersionInclude">
+	<Target Name="Build">
 		<Message Text="_______Building VC projects (x64)_______" Importance="high"/>
-		<VCBuild Projects="@(VCProject)" Configuration="$(Configuration)|x64"/>
+		<MSBuild Projects="@(VCProject)" Properties="Configuration=$(Configuration);Platform=x64"/>
 	</Target>
 
-	<Target Name="Build_x86" DependsOnTargets="SvnVersionInclude;VCProjects_x86">
-		<Message Text="_______Building Installer (x86)_______" Importance="high"/>
-		<MSBuild Projects="Installer\Installer.msbuild" 
-			Properties="Configuration=$(Configuration);Platform=x86"/>
+	<Target Name="Clean">
+		<MSBuild Targets="Clean" Projects="@(VCProject)" Properties="Configuration=$(Configuration);Platform=x64" />
 	</Target>
 
-	<!-- For x64, we need to build both 32- and 64-bit executables. -->
-	<Target Name="Build_x64" DependsOnTargets="SvnVersionInclude;VCProjects_x86;VCProjects_x64">
-		<Message Text="_______Building Installer (x64)_______" Importance="high"/>
-		<MSBuild Projects="Installer\Installer.msbuild" 
-			Properties="Configuration=$(Configuration);Platform=x64"/>
-	</Target>
-
-	<!-- Clean and Rebuild targets ............................................................... -->
-
-	<Target Name="Clean_x86">
-		<Delete Files="_version.h"/>
-		<VCBuild Clean="true" Projects="@(VCProject)" Configuration="$(Configuration)|Win32" />
-		<MSBuild Targets="Clean" Projects="Installer\Installer.msbuild"
-			Properties="Configuration=$(Configuration);Platform=x86" />
-	</Target>
-
-	<Target Name="Clean_x64" DependsOnTargets="Clean_x86">
-		<Delete Files="_version.h"/>
-		<VCBuild Clean="true" Projects="@(VCProject)" Configuration="$(Configuration)|x64" />
-		<MSBuild Targets="Clean" Projects="Installer\Installer.msbuild"
-			Properties="Configuration=$(Configuration);Platform=x64" />
-	</Target>
-
-	<Target Name="Rebuild_x86" DependsOnTargets="Clean_x86;Build_x86"/>
-	<Target Name="Rebuild_x64" DependsOnTargets="Clean_x64;Build_x64"/>
+	<Target Name="Rebuild" DependsOnTargets="Clean;Build"/>
 
 </Project>

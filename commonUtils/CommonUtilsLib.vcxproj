@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CEBFFF03-60B2-4629-9D50-0A2D001528DA}</ProjectGuid>
+    <VCProjectVersion>17</VCProjectVersion>
+    <RootNamespace>CommonUtilsLib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <OutDir>output\$(PlatformName)\$(ConfigurationName)\</OutDir>
+    <IntDir>output\$(PlatformName)\$(ConfigurationName)\int\</IntDir>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMFC>DLL</UseOfMFC>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <OutDir>output\$(PlatformName)\$(ConfigurationName)\</OutDir>
+    <IntDir>output\$(PlatformName)\$(ConfigurationName)\int\</IntDir>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMFC>DLL</UseOfMFC>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_AFXDLL;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..;tinyxml;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <EnableFunctionLevelLinking>true</EnableFunctionLevelLinking>
+    </ClCompile>
+    <Lib>
+      <OutputFile>lib\CommonUtils64_d.lib</OutputFile>
+    </Lib>
+    <ResourceCompile />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_AFXDLL;_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.;..;tinyxml;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>MinSpace</Optimization>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <EnableFunctionLevelLinking>true</EnableFunctionLevelLinking>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Lib>
+      <OutputFile>lib\CommonUtils64.lib</OutputFile>
+    </Lib>
+    <ResourceCompile />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="BalloonHelp.cpp" />
+    <ClCompile Include="Base64.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="CacheImageList.cpp" />
+    <ClCompile Include="DlgExpander.cpp" />
+    <ClCompile Include="DownloadThread.cpp" />
+    <ClCompile Include="DragListCtrl.cpp" />
+    <ClCompile Include="EditEx.cpp" />
+    <ClCompile Include="FolderDlg.cpp" />
+    <ClCompile Include="GdiUtils.cpp" />
+    <ClCompile Include="GroupCheck.cpp" />
+    <ClCompile Include="HTMLFormatter.cpp" />
+    <ClCompile Include="HyperLink.cpp" />
+    <ClCompile Include="ItemIdList.cpp" />
+    <ClCompile Include="LogFile.cpp" />
+    <ClCompile Include="MessageBox.cpp" />
+    <ClCompile Include="NTKernelApi.cpp" />
+    <ClCompile Include="NtKernelUtils.cpp" />
+    <ClCompile Include="OsVersion.cpp" />
+    <ClCompile Include="PopupDlg.cpp" />
+    <ClCompile Include="Profile.cpp" />
+    <ClCompile Include="Registry.cpp" />
+    <ClCompile Include="ResizableDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="VersionInfo.cpp" />
+    <ClCompile Include="VistaFontHelper.cpp" />
+    <ClCompile Include="TinyXml\tinystr.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TinyXml\tinyxml.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TinyXml\tinyxmlerror.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TinyXml\tinyxmlparser.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TreeListCtrl\EditableTreeListCtrl.cpp" />
+    <ClCompile Include="TreeListCtrl\MultiSelTree.cpp" />
+    <ClCompile Include="TreeListCtrl\TreeListCtrl.cpp" />
+    <ClCompile Include="TreePropSheet\PropPageFrame.cpp" />
+    <ClCompile Include="TreePropSheet\PropPageFrameDefault.cpp" />
+    <ClCompile Include="TreePropSheet\TreePropSheet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_autolink.h" />
+    <ClInclude Include="BalloonHelp.h" />
+    <ClInclude Include="Base64.h" />
+    <ClInclude Include="CacheImageList.h" />
+    <ClInclude Include="crc32.h" />
+    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="DlgExpander.h" />
+    <ClInclude Include="DlgTemplate.h" />
+    <ClInclude Include="DownloadThread.h" />
+    <ClInclude Include="DragListCtrl.h" />
+    <ClInclude Include="EditEx.h" />
+    <ClInclude Include="FileFinder.h" />
+    <ClInclude Include="FolderDlg.h" />
+    <ClInclude Include="GdiUtils.h" />
+    <ClInclude Include="GroupCheck.h" />
+    <ClInclude Include="HTMLFormatter.h" />
+    <ClInclude Include="HyperLink.h" />
+    <ClInclude Include="ItemIdList.h" />
+    <ClInclude Include="LogFile.h" />
+    <ClInclude Include="MemDC.h" />
+    <ClInclude Include="MenuHelp.h" />
+    <ClInclude Include="messagebox.h" />
+    <ClInclude Include="MfcThread.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="NTKernelApi.h" />
+    <ClInclude Include="NtKernelUtils.h" />
+    <ClInclude Include="OsVersion.h" />
+    <ClInclude Include="PopupDlg.h" />
+    <ClInclude Include="Profile.h" />
+    <ClInclude Include="Registry.h" />
+    <ClInclude Include="ResizableDlg.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringUtils.h" />
+    <ClInclude Include="tstring.h" />
+    <ClInclude Include="UnicodeUtils.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="VersionInfo.h" />
+    <ClInclude Include="VistaFontHelper.h" />
+    <ClInclude Include="TinyXml\tinystr.h" />
+    <ClInclude Include="TinyXml\tinyxml.h" />
+    <ClInclude Include="TreeListCtrl\EditableTreeListCtrl.h" />
+    <ClInclude Include="TreeListCtrl\MultiSelTree.h" />
+    <ClInclude Include="TreeListCtrl\TreeListCtrl.h" />
+    <ClInclude Include="TreePropSheet\PropPageFrame.h" />
+    <ClInclude Include="TreePropSheet\PropPageFrameDefault.h" />
+    <ClInclude Include="TreePropSheet\TreePropSheet.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
