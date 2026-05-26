@@ -28,7 +28,6 @@
 //--- ATL headers
 
 #include <atlbase.h>
-#include <atlrx.h>
 
 //--- Windows headers
 
@@ -49,6 +48,8 @@
 #include <string>
 #include <iterator>
 #include <cstdlib>
+#include <regex>
+#include <algorithm>
 
 //--- boost headers
 

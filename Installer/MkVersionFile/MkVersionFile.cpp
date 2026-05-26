@@ -22,13 +22,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <boost/regex.hpp>
-#include <boost/algorithm/string.hpp>
-#include <sys/types.h> 
-#include <sys/stat.h>
+#include <regex>
+#include <cstdio>
 
 using namespace std;
-using namespace boost;
 
 //--------------------------------------------------------------------------------------------
 
@@ -43,6 +40,19 @@ void LoadFile( std::string* ps, std::istream& is)
          ps->reserve( ps->capacity() * 3 );
       ps->append( 1, c );
    }
+}
+
+//--------------------------------------------------------------------------------------------
+/// Replace all occurrences of \a from in \a ps with \a to.
+
+void ReplaceAll( std::string* ps, const std::string& from, const std::string& to )
+{
+	size_t pos = 0;
+	while( ( pos = ps->find( from, pos ) ) != std::string::npos )
+	{
+		ps->replace( pos, from.size(), to );
+		pos += to.size();
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -87,41 +97,41 @@ int main(int argc, char* argv[])
 	regex expr_micro( "#define\\s+APP_VER_MICRO\\s+(\\d+)" );
 	regex expr_build( "#define\\s+APP_VER_BUILD\\s+(\\d+)" );
 		
-	match_results<const char*> match;
+	smatch match;
 	string v_major, v_minor, v_micro, v_build;
 
-	if( ! regex_search( instr.c_str(), match, expr_major ) )
+	if( ! regex_search( instr, match, expr_major ) )
 	{
 		printf( "[MkVersionFile] ERROR: input file has unexpected format.\n" );
 		return 4;
 	}
 	v_major = match[1].str();
 
-	if( ! regex_search( instr.c_str(), match, expr_minor ) )
+	if( ! regex_search( instr, match, expr_minor ) )
 	{
 		printf( "[MkVersionFile] ERROR: input file has unexpected format.\n" );
 		return 5;
 	}
 	v_minor = match[1].str();
 
-	if( ! regex_search( instr.c_str(), match, expr_micro ) )
+	if( ! regex_search( instr, match, expr_micro ) )
 	{
 		printf( "[MkVersionFile] ERROR: input file has unexpected format.\n" );
 		return 6;
 	}
 	v_micro = match[1].str();
 
-	if( ! regex_search( instr.c_str(), match, expr_build ) )
+	if( ! regex_search( instr, match, expr_build ) )
 	{
 		printf( "[MkVersionFile] ERROR: input file has unexpected format.\n" );
 		return 7;
 	}
 	v_build = match[1].str();
 
-	replace_all( outstr, "$APP_VER_MAJOR$", v_major );
-	replace_all( outstr, "$APP_VER_MINOR$", v_minor );
-	replace_all( outstr, "$APP_VER_MICRO$", v_micro );
-	replace_all( outstr, "$APP_VER_BUILD$", v_build );
+	ReplaceAll( &outstr, "$APP_VER_MAJOR$", v_major );
+	ReplaceAll( &outstr, "$APP_VER_MINOR$", v_minor );
+	ReplaceAll( &outstr, "$APP_VER_MICRO$", v_micro );
+	ReplaceAll( &outstr, "$APP_VER_BUILD$", v_build );
 
 	ofstream outfile( outpath, ios_base::binary );
 	if( ! outfile )

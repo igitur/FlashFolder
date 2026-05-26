@@ -117,7 +117,7 @@ void CPopupDlg::CheckDismiss()
 
 //-----------------------------------------------------------------------------------------------
 
-void CPopupDlg::OnTimer( UINT id )
+void CPopupDlg::OnTimer( UINT_PTR id )
 {
 	if( id != POPUPDLG_TIMER_ID || m_isCancelling || m_isSizing )
 		return;

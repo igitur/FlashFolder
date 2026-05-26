@@ -565,6 +565,8 @@ const DWORD FILE_READ_ATTRIBUTES                = 0x0080; // all types
 const DWORD FILE_WRITE_ATTRIBUTES               = 0x0100; // all types
 const DWORD FILE_ALL_ACCESS                     (= 0x01FF | STANDARD_RIGHTS_ALL)
 */
+// These constants duplicate definitions in the Windows SDK headers; commented out to avoid conflicts.
+/*
 const DWORD FILE_DIRECTORY_FILE                     = 0x00000001;
 const DWORD FILE_WRITE_THROUGH                      = 0x00000002;
 const DWORD FILE_SEQUENTIAL_ONLY                    = 0x00000004;
@@ -588,6 +590,7 @@ const DWORD FILE_NO_COMPRESSION                     = 0x00008000;
 const DWORD FILE_VALID_OPTION_FLAGS                 = 0x000FFFFF;
 
 const DWORD FILE_VALID_SET_FLAGS                    = 0x00001036;
+*/
 
 
 //=================================================================================================

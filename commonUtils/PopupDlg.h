@@ -17,6 +17,7 @@
  */
 #pragma once
 #include "afxcmn.h"
+#include "ResizableDlg.h"
 
 //-----------------------------------------------------------------------------------------------
 /// Dialog that works just like a popup menu: if the user clicks outside the window, 
@@ -46,7 +47,7 @@ protected:
 	afx_msg void OnCaptureChanged( CWnd* pWnd );
 	afx_msg void OnLButtonDown( UINT flags, CPoint pt );
 	afx_msg void OnRButtonDown( UINT flags, CPoint pt );
-	afx_msg void OnTimer( UINT id );
+	afx_msg void OnTimer( UINT_PTR id );
 	afx_msg LRESULT OnEnterSizeMove( WPARAM, LPARAM );
 	afx_msg LRESULT OnExitSizeMove( WPARAM, LPARAM );
 	DECLARE_MESSAGE_MAP()

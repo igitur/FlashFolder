@@ -15,7 +15,6 @@
 //--- ATL headers
 
 #include <atlbase.h>
-#include <atlrx.h>
 #include <atlfile.h>
 #include <atlsecurity.h>
 

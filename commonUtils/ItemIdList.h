@@ -17,25 +17,25 @@
  */
 #pragma once
 
-#include <boost\shared_ptr.hpp>
+#include <memory>
 
-typedef boost::shared_ptr< ITEMIDLIST __unaligned > SpITEMIDLIST;
-typedef boost::shared_ptr< const ITEMIDLIST __unaligned > SpcITEMIDLIST;
+typedef std::shared_ptr< ITEMIDLIST > SpITEMIDLIST;
+typedef std::shared_ptr< const ITEMIDLIST > SpcITEMIDLIST;
 
-template< typename T >
 struct SharedPidlDeleter
 {
-	void operator()( T pidl ) { ::CoTaskMemFree( (LPVOID) pidl ); }
+	void operator()( ITEMIDLIST* pidl ) const { ::CoTaskMemFree( (LPVOID) pidl ); }
+	void operator()( const ITEMIDLIST* pidl ) const { ::CoTaskMemFree( (LPVOID) pidl ); }
 };
 
 inline SpITEMIDLIST MakeSharedPidl( LPITEMIDLIST pidl )
 {
-	return SpITEMIDLIST( pidl, SharedPidlDeleter< LPITEMIDLIST >() );
+	return SpITEMIDLIST( reinterpret_cast<ITEMIDLIST*>( pidl ), SharedPidlDeleter() );
 }
 
 inline SpcITEMIDLIST MakeSharedPidl( LPCITEMIDLIST pidl )
 {
-	return SpcITEMIDLIST( pidl, SharedPidlDeleter< LPCITEMIDLIST >() );
+	return SpcITEMIDLIST( reinterpret_cast<const ITEMIDLIST*>( pidl ), SharedPidlDeleter() );
 }
 
 inline HRESULT GetPidlFromPath( PIDLIST_ABSOLUTE* pidlResult, LPCWSTR path )

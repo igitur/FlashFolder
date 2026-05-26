@@ -107,7 +107,7 @@ BOOL CPageGeneric::OnApply()
 void CPageGeneric::OnBnClickedBtnReset()
 {
 	CPropertySheet* sheet = static_cast<CPropertySheet*>( GetParent() );
-	ASSERT( pSheet );
+	ASSERT( sheet );
 
 	// Make all pages read the default profile.
 	CApp::SetReadDefaults( true );	

@@ -34,8 +34,9 @@ using namespace std;
 const TCHAR UPDATECHECK_URL[] = _T("http://sourceforge.net/export/rss2_projnews.php?group_id=195039");
 //const TCHAR UPDATECHECK_URL[] = _T("http://sourceforge.net/export/rss2_projnews.php?group_id=195039&rss_fulltext=1");
 
-// Regular expression for parsing version number from RSS item title. Must be lower-case.
-const TCHAR RSS_ITEMTITLE_VERSION_EXPR[] = _T("flashfolder\\b+{\\d+(\\.\\d+)+}.*\\b+released");
+// Regular expression for parsing version number from RSS item title (std::regex/ECMAScript syntax).
+// Must be lower-case. The version number is captured in group 1.
+const TCHAR RSS_ITEMTITLE_VERSION_EXPR[] = _T("flashfolder\\b\\s*(\\d+(?:\\.\\d+)+).*released");
 
 // URL for downloading manually
 const TCHAR DOWNLOAD_URL[] = _T("http://sourceforge.net/project/platformdownload.php?group_id=195039");
@@ -167,30 +168,34 @@ void CUpdateCheckDlg::OnCancel()
 bool GetVersionFromTitle( int* pVersion, LPCTSTR pTitle, LPCTSTR pFilterExpr )
 {
 	// Build regular expression for parsing version number from RSS item title
-	CAtlRegExp<> reVer;
-	if( reVer.Parse( pFilterExpr ) != REPARSE_ERROR_OK )
+	// Note: pFilterExpr uses std::regex syntax with one capture group
+	std::wregex reVer;
+	try
+	{
+		reVer.assign( pFilterExpr, std::regex_constants::icase );
+	}
+	catch( const std::regex_error& )
 	{
 		ASSERT( 0 );
 		return false;
 	}
 
-	CString title = pTitle;
-	title.MakeLower();
-	CAtlREMatchContext<> mcVer;
-	if( reVer.Match( title, &mcVer ) )
+	std::wstring title = pTitle;
+	std::transform( title.begin(), title.end(), title.begin(), ::towlower );
+	std::wsmatch mcVer;
+	if( std::regex_search( title, mcVer, reVer ) )
 	{
-		if( mcVer.m_uNumGroups != 1 )
+		if( mcVer.size() < 2 )  // need at least one capture group
 		{
 			ASSERT( 0 );  // unexpected regular expression
 			return false;
 		}
 
-		LPCTSTR pStart = NULL, pEnd = NULL;
-		mcVer.GetMatch( 0, &pStart, &pEnd );
-		CString sVerNum( pStart, pEnd - pStart );
+		std::wstring sVerNum = mcVer[1].str();
+		CString sVerNumMfc( sVerNum.c_str() );
 
 		vector<CString> sVerNumSplit;
-		SplitString( back_inserter( sVerNumSplit ), sVerNum.GetString(), _T('.') );
+		SplitString( back_inserter( sVerNumSplit ), sVerNumMfc.GetString(), _T('.') );
 		sVerNumSplit.resize( 4 );
 		for( int i = 0; i < 4; ++i )
 			pVersion[ i ] = _ttoi( sVerNumSplit[ i ] );
