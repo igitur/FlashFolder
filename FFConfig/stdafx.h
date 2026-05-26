@@ -95,4 +95,7 @@
 #include <common\ff_utils.h>
 #include <common\ProfileDefaults.h>
 #include <common\ProcessNames.h>
+#include <common\Favorites.h>
+#include <FileMgrPlugin\TotalCmdUtils.h>
+using namespace totalcmdutils;
 
