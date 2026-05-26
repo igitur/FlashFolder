@@ -146,7 +146,7 @@ LRESULT CALLBACK CmnFolderDlgHook::TreeParentWindowProc(
 		case WM_NOTIFY:
 		{
 			NMTREEVIEW* pnm = reinterpret_cast<NMTREEVIEW*>( lParam );
-			if( pnm->hdr.code == TVN_SELCHANGED )
+			if( g_pHook && pnm->hdr.code == TVN_SELCHANGED )
 			{
 				if( pnm->itemNew.hItem )
 				{
@@ -161,8 +161,9 @@ LRESULT CALLBACK CmnFolderDlgHook::TreeParentWindowProc(
 		break;
 	}
 
-    //call original message handler
-    return CallWindowProc( g_pHook->m_oldParentWndProc, hwnd, uMsg, wParam, lParam);
+    if( g_pHook )
+        return CallWindowProc( g_pHook->m_oldParentWndProc, hwnd, uMsg, wParam, lParam);
+    return 0;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -251,21 +252,25 @@ LRESULT CALLBACK CmnFolderDlgHook::HookWindowProc(
 			FileDlgHookCallbacks::OnShow( wParam != 0 );
 			break;
 
-		case WM_DESTROY:
-			FileDlgHookCallbacks::OnDestroy( ! g_pHook->m_fileDialogCanceled );
-			break;
-
 		case WM_NCDESTROY:
 		{			
-			// Remove our window property from the file dialog.
-			// We stored it there in CmnFolderDlgHook::Init().
+			// Save old wndproc before it becomes inaccessible.
+			WNDPROC oldWndProc = g_pHook->m_oldWndProc;
 			::RemoveProp( hwnd, FLASHFOLDER_HOOK_PROPERTY );     
+
+			// Call original wndproc first (dialog must clean up before we destroy the hook).
+			LRESULT res = ::CallWindowProc( oldWndProc, hwnd, uMsg, wParam, lParam );
+
+			FileDlgHookCallbacks::OnDestroy( ! g_pHook->m_fileDialogCanceled );
+			g_pHook = NULL;
+
+			return res;
 		}
-		break;
     }
 
-    //call original message handler
-    return CallWindowProc( g_pHook->m_oldWndProc, hwnd, uMsg, wParam, lParam);
+    if( g_pHook )
+        return CallWindowProc( g_pHook->m_oldWndProc, hwnd, uMsg, wParam, lParam);
+    return 0;
 }
 
 //-----------------------------------------------------------------------------------------

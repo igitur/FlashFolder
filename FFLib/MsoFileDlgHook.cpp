@@ -76,10 +76,14 @@ bool MsoFileDlgHook::Init( HWND hwndFileDlg, HWND hwndTool )
 
 LRESULT CALLBACK MsoFileDlgHook::KeyboardHookProc( int code, WPARAM wParam, LPARAM lParam )
 {
-	if( code == HC_ACTION && wParam == VK_ESCAPE )
-		g_pHook->m_fileDialogCanceled = true;
+	if( g_pHook )
+	{
+		if( code == HC_ACTION && wParam == VK_ESCAPE )
+			g_pHook->m_fileDialogCanceled = true;
 
-	return ::CallNextHookEx( g_pHook->m_hKeyboardHook, code, wParam, lParam );
+		return ::CallNextHookEx( g_pHook->m_hKeyboardHook, code, wParam, lParam );
+	}
+	return ::CallNextHookEx( NULL, code, wParam, lParam );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -236,7 +240,7 @@ bool MsoFileDlgHook::SetFilter( LPCTSTR filter )
 
 void MsoFileDlgHook::OnTimer()
 {
-	if( ! g_pHook->m_isWindowActive )
+	if( ! g_pHook || ! g_pHook->m_isWindowActive )
 		return;
 
 	// Check if the current path has changed. If so, notify the tool window.
@@ -327,10 +331,6 @@ LRESULT CALLBACK MsoFileDlgHook::HookWindowProc(
 			FileDlgHookCallbacks::OnShow( wParam != 0 );
 			break;
 
-		case WM_DESTROY:
-			FileDlgHookCallbacks::OnDestroy( ! g_pHook->m_fileDialogCanceled );
-			break;
-
 		case WM_NCDESTROY:
 		{
 			// Remove our window property from the file dialog.
@@ -339,6 +339,17 @@ LRESULT CALLBACK MsoFileDlgHook::HookWindowProc(
 
 			if( g_pHook->m_hKeyboardHook )
 				::UnhookWindowsHookEx( g_pHook->m_hKeyboardHook );
+
+			// Save old wndproc before it becomes inaccessible.
+			WNDPROC oldWndProc = g_pHook->m_oldWndProc;
+
+			// Call original wndproc first (dialog must clean up before we destroy the hook).
+			LRESULT res = ::CallWindowProc( oldWndProc, hwnd, uMsg, wParam, lParam );
+
+			FileDlgHookCallbacks::OnDestroy( ! g_pHook->m_fileDialogCanceled );
+			g_pHook = NULL;
+
+			return res;
 		}
 		break;
 
@@ -348,16 +359,20 @@ LRESULT CALLBACK MsoFileDlgHook::HookWindowProc(
 		break;
     }
 
-	if( uMsg == g_pHook->m_wmObjectSel )
+	if( g_pHook )
 	{
-		// The registered window message "WM_OBJECTSEL" is send when the user sets the 
-		// input focus to another control in the file dialog.
+		if( uMsg == g_pHook->m_wmObjectSel )
+		{
+			// The registered window message "WM_OBJECTSEL" is send when the user sets the 
+			// input focus to another control in the file dialog.
 
-		g_pHook->m_fileDialogCanceled = lParam == 2;  // cancel button selected
+			g_pHook->m_fileDialogCanceled = lParam == 2;  // cancel button selected
+		}
+
+		//call original message handler
+		return CallWindowProc( g_pHook->m_oldWndProc, hwnd, uMsg, wParam, lParam);
 	}
-
-    //call original message handler
-    return CallWindowProc( g_pHook->m_oldWndProc, hwnd, uMsg, wParam, lParam);
+    return 0;
 }
 
 //-----------------------------------------------------------------------------------------
