@@ -109,8 +109,6 @@
 		</InstallExecuteSequence>
 
 		<!-- Public custom properties ............................................................ -->
-
-		<Property Id="TARGETDIR" Secure="yes"/>
 		
 		<!-- Internal custom properties .......................................................... -->
 
