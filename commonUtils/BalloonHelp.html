@@ -18,7 +18,7 @@ Previous release:
 Ports:
 <ul class="download">
 	<li>
-		<a href='BalloonHelp/WTL_BalloonHelp_Demo.zip'>Download Maximilian Hänel's WTL 
+		<a href='BalloonHelp/WTL_BalloonHelp_Demo.zip'>Download Maximilian Hï¿½nel's WTL 
 			port (source + demo) - 58Kb</a></li>
 	<li>
 		<a href='BalloonHelp/BH-ATL.zip'>Download Fil Mackay's ATL port (source + demo) - 
@@ -76,7 +76,7 @@ Ports:
 <P>Or really,&nbsp;I hate <code>MessageBox()</code>s. Something about having a 
 	form of output <I>sooo</I> convenient, a single function call, no need for 
 	resources to be added, for interfaces to be designed, for any planning or 
-	preparation <I>at all</I> – not even a window handle is needed (!) – seems 
+	preparation <I>at all</I> ï¿½ not even a window handle is needed (!) ï¿½ seems 
 	almost to <I>force</I> programmers to use it whenever there is any doubt about 
 	what the user should know. Is there a chance a user will perform an action in 
 	error? Better get confirmation... Just pop up a <code>MessageBox()</code>! 
@@ -89,15 +89,15 @@ Ports:
 	that will suffice...</P>
 <P>But worse yet are programs that feel the need to inform you, after performing 
 	an action that you <I>explicitly requested</I>, that the action has indeed been 
-	performed, using – you guessed it – <code>MessageBox()</code>. Nothing wrong 
+	performed, using ï¿½ you guessed it ï¿½ <code>MessageBox()</code>. Nothing wrong 
 	with a little feedback, especially if the action had effects not necessarily 
 	intuitive to first-time users, but to do it in a way that requires you to stop 
 	what you're doing, (and what is sometimes worse, what the <I>program</I> is 
 	doing) just to acknowledge it... That is not funny.
 </P>
 <h3>OK...</h3>
-<P>Enough hypocritical griping however. Solutions do exist – creating message 
-	boxes with check boxes or “yes to all” / “no to all” buttons is not difficult. 
+<P>Enough hypocritical griping however. Solutions do exist ï¿½ creating message 
+	boxes with check boxes or ï¿½yes to allï¿½ / ï¿½no to allï¿½ buttons is not difficult. 
 	For the purpose of feedback, displaying a short message in a status bar will 
 	often suffice, or possibly adding a log pane. But both of these options really 
 	only work for the main window of an application, and have other drawbacks in 
@@ -202,7 +202,7 @@ CBalloonHelp::LaunchBalloon(&quot;You are holding down the right mouse button!&q
       CballoonHelp::unCLOSE_ON_RBUTTON_UP|CBalloonHelp::unSHOW_INNER_SHADOW, 
                                           this, &quot;&quot;, 0);</pre>
 <P>
-	The first line above will show a balloon with the title “BoogaBooga” and 
+	The first line above will show a balloon with the title ï¿½BoogaBoogaï¿½ and 
 	associated message anchored to the top left corner of the screen (point is in 
 	screen coordinates). Ideally, you'd anchor it to something more meaningful, 
 	such as the center of a control, or a status bar icon. The default options will 
@@ -211,7 +211,7 @@ CBalloonHelp::LaunchBalloon(&quot;You are holding down the right mouse button!&q
 <P>The second line above will show a balloon, this time anchored to the top left 
 	corner of the window represented by <code>this</code>, this time with the 
 	standard warning icon. The CBalloonHelp::unCLOSE_ON_RBUTTON_UP option will 
-	cause it to be destroyed when the right mouse button is released – if a mouse 
+	cause it to be destroyed when the right mouse button is released ï¿½ if a mouse 
 	button is being held down, then mouse input is captured, so the balloon will 
 	close whenever the right mouse button is released. If no mouse button is held 
 	down, the user will have to release the right mouse button somewhere in a 
@@ -369,7 +369,7 @@ CBalloonHelp::unDISABLE_FADEOUT       //  disable the fade-out effect
 <P>Compiles with VC++ 6.0 / MFC 6 and VC++.NET / MFC 7</P>
 <h2><a name="Internals">Internals</a></h2>
 <P><code>CBalloonHelp</code> is an MFC class, derived from <code>CWnd</code>. The 
-	first time a balloon is created, a window class named “BalloonHelpClass” is 
+	first time a balloon is created, a window class named ï¿½BalloonHelpClassï¿½ is 
 	registered. First, a window class with the <code>CS_DROPSHADOW</code> style is 
 	registered; if registration fails, the style is removed, and registration is 
 	attempted again. This allows use of the style on Windows XP, while avoiding 
@@ -404,7 +404,7 @@ CBalloonHelp::unDISABLE_FADEOUT       //  disable the fade-out effect
 <p>5/30/02
 	<ul>
 		<li>
-		Posted Maximilian Hänel's WTL port.
+		Posted Maximilian Hï¿½nel's WTL port.
 		<li>
 		Release #2 (arbitrary number, but needed something)
 		<li>
@@ -492,7 +492,7 @@ CBalloonHelp::unDISABLE_FADEOUT       //  disable the fade-out effect
 	for demonstrating how <code>WM_NCHITTEST</code> can be used to provide hot 
 	tracking. Check out his <a href="http://www.codeproject.com/library/classlib.asp">ClassLib</a>
 	library on CP!</p>
-<p>...Maximilian Hänel for his WTL port, and for demonstrating therein a nicer way 
+<p>...Maximilian Hï¿½nel for his WTL port, and for demonstrating therein a nicer way 
 	to handle message hooks.</p>
 <p>...To all the people who've provided feedback, positive and negative. It all 
 	helps.</p>

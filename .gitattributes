@@ -1,0 +1,19 @@
+* text=auto eol=crlf
+
+*.bmp binary
+*.cur binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.psd binary
+*.gif binary
+*.tif binary
+*.tiff binary
+*.exe binary
+*.dll binary
+*.lib binary
+*.pdb binary
+*.msi binary
+*.zip binary
+*.rtf binary
