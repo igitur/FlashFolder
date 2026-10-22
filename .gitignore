@@ -1,0 +1,23 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+*.ilk
+*.pdb
+*.tlog
+
+# Build output
+output/
+obj/
+bin/
+lib/
+Debug/
+Release/
+x64/
+exe/
+Installer/Installer/
+Installer/msi/
+
+# Generated version file (created by Installer\MkVersionFile)
+Installer/_version.wxi
